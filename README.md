@@ -66,3 +66,8 @@ npm test
 ## License
 
 MIT. Model weights are not bundled. Muse Glimmer model attribution: Meta; review its model license before production use.
+
+
+## 2026 judge-focused presentation
+
+The interface now begins with a cinematic but accessible editorial intro, a high-contrast agreement overview, and a six-scene guided demo tour. Select **Explore the live workspace**, or use **Take the 6-scene tour**. In the app, select **↶ Intro** to replay or **✦ Demo tour** for scene notes. The in-product story and client names are synthetic. See `DEMO_VIDEO_SCRIPT.md` for the original narrated 3-minute storyboard.

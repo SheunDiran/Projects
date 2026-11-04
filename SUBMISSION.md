@@ -29,6 +29,10 @@
 5. Explicit supersession or rejection, with audit events and export.
 6. Optional live Meta open-weight inference and exact-quote postvalidation.
 
+## Three-minute demo — see `DEMO_VIDEO_SCRIPT.md` for full shot-by-shot narration
+
+The cinematic opening, redesigned overview and guided six-scene product tour are now part of the source. A silent opening teaser is provided as a separate media file.
+
 ## Three-minute demo script
 
 **0:00–0:20 — The pain:** “When a client says ‘Can you add a dashboard and still launch a week earlier?’, did the team agree? Accord makes the difference visible.” Show Overview with pending changes.
