@@ -54,3 +54,14 @@ You can use this tour to rehearse, then dismiss the overlay for a clean screen c
 - The impact simulator is deterministic and explanatory. It flags review dependencies, not probabilistic AI predictions.
 - The AI feature must use a real approved Meta model and must be demonstrated working. The credits application is optional; actual model use is not.
 - The official model eligibility and deadline take precedence over any rehearsal script.
+
+
+## V3 cinematic opening — update to demo cut
+
+**00:00–00:07** – Screen-record the actual five-second case-file mystery. The hero will reveal `WE HAD A DEAL.`, `THEN CAME ONE MESSAGE.`, `A REQUEST IS NOT AN AGREEMENT.` The app transitions to the landing page automatically. The button `Replay the mystery` allows another take.
+
+**00:07–00:19** – Let viewers inspect the landing page and click the second evidence card. The original E103 request appears verbatim. At this point say: **“What we agreed is not what someone later asks for. Accord remembers the difference.”** Continue with the dashboard route.
+
+**00:19–02:57** – Follow the prepared case chronology in the supplied `accord-full-demo-preview.mp4`, using the matching `accord-film-captions.srt` as the narration/closed-caption reference. Each scene is labeled, including a model-status disclosure.
+
+**BEFORE FINAL SUBMISSION:** Replace the model-lab preview portion with footage of a real Muse Glimmer response after a key has been configured; show the quote source matches; add actual clicks for decision confirmation; render a new <=3:00 recorded demo. Do not represent the supplied captioned showcase reel as proof of working AI integration.

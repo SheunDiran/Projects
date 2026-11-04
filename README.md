@@ -71,3 +71,16 @@ MIT. Model weights are not bundled. Muse Glimmer model attribution: Meta; review
 ## 2026 judge-focused presentation
 
 The interface now begins with a cinematic but accessible editorial intro, a high-contrast agreement overview, and a six-scene guided demo tour. Select **Explore the live workspace**, or use **Take the 6-scene tour**. In the app, select **↶ Intro** to replay or **✦ Demo tour** for scene notes. The in-product story and client names are synthetic. See `DEMO_VIDEO_SCRIPT.md` for the original narrated 3-minute storyboard.
+
+
+## Cinematic V3 experience (November 4, 2026)
+
+The entry now includes a skippable 5-second case-file cold open, three-stage suspense reveal, responsive editorial landing page, three interactive source-inspection cards, optional original Web Audio sound, replay controls, and a six-scene guided tour. Sound is user-initiated and motion can be reduced through OS preferences. These are real in-product elements and require no external image or sound assets.
+
+### Video assets and disclosure
+
+`accord-full-demo-preview.mp4` is a **177-second captioned pre-submission product film**, composed from real UI screenshots and the recorded cinematic opening. It is a rehearsal/presentation cut, **not evidence of a working Meta-model call**, a full live click-through, or a final submission recording. The Muse Glimmer section explicitly says live inference needs a key. Record and insert verified model call footage before submitting a judging demonstration. `accord-film-captions.srt` contains editable narration captions.
+
+### Getting an API key without Meta hackathon credits
+
+The app calls `meta/muse-glimmer-30b` via NVIDIA's documented free prototyping endpoint `https://integrate.api.nvidia.com/v1/chat/completions`. Open https://build.nvidia.com/meta/muse-glimmer-30b and use **Generate API Key** while logged into an eligible NVIDIA account. Copy the key into the masked, session-only field in Accord's Meta AI Lab on a deployed site; **do not commit or share it**. A site owner can instead configure `NVIDIA_API_KEY` in Vercel environment variables. No $150 hackathon credit claim is required for the NVIDIA route. Provider free quotas are subject to change. Verify an actual successful Meta response before calling the AI feature operational.
