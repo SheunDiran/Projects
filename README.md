@@ -1,94 +1,102 @@
 # Accord — Evidence to Agreement
 
-**Meta Global AI Developer Hackathon (Oct 26–Nov 4, 2026)** · Indie Developer · **Build for Your World**
+### A request is not an agreement.
 
-Accord turns fragmented client messages into source-linked decision history. It separates commitments from suggestions, checks contradictions, previews dependencies before a change is accepted, and preserves the evidence trail for accountability. This is a **standalone, static/serverless demo** built to make the original Work prototype judge-accessible; it is **not a verified export** of the earlier private prototype.
+**An evidence-backed workspace for tracking commitments, spotting conflicting decisions, and seeing the impact of change before saying yes.**
 
-## What it does
+[**Explore the live application**](https://accord-evidence-hackathon.vercel.app) · [**Watch the 2:57 narrated demonstration**](https://drive.google.com/file/d/1Dp7R1XATi_8vI0yrU9aBeXK1KVvbP7by/view?usp=drivesdk) · [**Read the API setup guide**](API_SETUP.md)
 
-- Import or paste evidence (TXT/Markdown and original text), search and link exact source quotes.
-- Record confirmed/proposed/rejected/superseded decisions with quote validation and source references.
-- Detect contradictory values across simultaneously confirmed decisions (deterministic; not semantic inference).
-- Preview proposed versus confirmed values and impacted categories without writing any changes.
-- Require explicit human confirmation to supersede the earlier agreement, or reject and preserve it.
-- Export/import all workspace data as JSON; inspect append-only event sequence in-browser.
-- **Optional live Meta open-weight integration:** Muse Glimmer 30B via NVIDIA NIM. The model extracts proposed terms with exact evidence quotes; the API filters non-verbatim quotations. No AI results are fabricated when no API key is present.
-- Includes synthetic, instantly resettable client case study. Fully responsive, no login required.
+**Meta Global AI Developer Hackathon 2026** · **Indie Developer** · **Build for Your World**
 
-## Local run
+---
+
+## The problem
+
+Imagine a studio agreeing to deliver a five-page website for ₦450,000 by November 18. Days later, the client asks for an extra dashboard, a November 11 deadline and no increase in price.
+
+Was that request accepted? Does it replace the original agreement? What else needs to change?
+
+Project commitments often drift across messages, emails and handoffs. Accord is designed to make the difference between **requested**, **agreed**, and **changed** visible.
+
+## What you can try now
+
+1. **Explore the case:** open the landing page and inspect the original source-backed story.
+2. **Evidence library:** examine kickoff communications and the later change request.
+3. **Decision ledger:** filter proposed, confirmed, rejected and superseded records.
+4. **Impact simulator:** preview affected delivery, quality-assurance and communication dependencies without mutating the agreement.
+5. **Human approval:** confirm or reject a proposed change and inspect its audit history.
+6. **Meta AI Lab:** see the planned source-grounded extraction flow and try the clearly marked **Illustrative AI Workflow**. This example is simulated and does **not** call a model.
+
+The application uses a fictional, resettable case study and browser-local storage. It is a functional prototype, **not a production agreement system**.
+
+## Architecture
+
+```text
+Browser UI (vanilla JavaScript / CSS / HTML)
+   ├── Evidence and original quotations
+   ├── Decision ledger + contradiction checks
+   ├── Deterministic change-impact preview
+   ├── Human confirm / reject / supersede
+   ├── Browser-local audit history + JSON export/import
+   └── Meta AI Lab
+         └── POST /api/analyze (Vercel serverless)
+               ├── Meta Muse Glimmer 30B through NVIDIA NIM
+               ├── Optional same-model OpenRouter fallback
+               ├── Exact-quotation validation
+               └── Candidate suggestions for human review
+```
+
+The backend requests a structured extraction response, verifies that each proposed supporting quotation appears in the supplied evidence, and discards suggestions without source-matching quotes. **An AI suggestion is never silently accepted as a confirmed commitment.**
+
+### AI integration status — important disclosure
+
+The inference integration is implemented and covered by automated tests, but **a successful hosted Meta-model inference has not yet been verified**. The NVIDIA endpoint returned **403 — Authorization failed** during production smoke testing. The fallback provider is optional and requires separate credentials. The lab's illustrative preview is deliberately labeled **SIMULATED — NO MODEL CALL**. No fabricated AI results are presented as live output.
+
+[API setup and troubleshooting](API_SETUP.md) · [Live source overview](SUBMISSION.md)
+
+## Responsive experience and demo
+
+The interface has been checked in browser emulation at widths including **320px, 390px, 768px, 1024px, and 1366px**. The main navigation scrolls on narrow screens and panels wrap to fit. Accessibility features include user-initiated sound, a skip control for the case-file opening, and reduced-motion handling. Physical-device testing is still recommended.
+
+The [**2-minute-57-second narrated video**](https://drive.google.com/file/d/1Dp7R1XATi_8vI0yrU9aBeXK1KVvbP7by/view?usp=drivesdk) shows the product story, source-linked decisions, change consequences and the clearly labeled illustrative AI workflow. This video is not footage of successful live Meta inference.
+
+## Run locally
 
 ```bash
+git clone https://github.com/SheunDiran/Projects.git
+cd Projects
+npm test
 npx serve . -l 3000
 ```
 
-Open http://localhost:3000. This runs the static app only; for `/api/analyze`, deploy to Vercel with `vercel deploy` or `vercel dev`. This app has no npm dependencies.
+Visit http://localhost:3000. The static client will run locally; `/api/analyze` requires a Vercel-compatible serverless environment. No browser API keys need to be checked into Git.
 
-## Model integration
+## Technology
 
-Use **Meta Muse Glimmer 30B** on NVIDIA Build: https://build.nvidia.com/meta/muse-glimmer-30b . The free prototyping endpoint may require NVIDIA account setup and is subject to provider limits. The API call goes from the user's browser to `/api/analyze`, then to NVIDIA's OpenAI-compatible endpoint using `meta/muse-glimmer-30b`.
+- **Frontend:** HTML5, CSS3, vanilla JavaScript.
+- **Backend:** JavaScript serverless function on Vercel.
+- **Model integration:** Meta Muse Glimmer 30B through NVIDIA NIM; optional OpenRouter provider.
+- **Data:** browser `localStorage` with JSON import/export.
+- **Validation:** exact quote matching, explicit user confirmation, deterministic impact checklist.
+- **Testing:** Node built-in test runner and automated endpoint smoke tests.
 
-Two modes:
+## Limitations and next steps
 
-1. **Browser-session BYOK:** Enter an NVIDIA API key in the Meta AI Lab; it is held only in a JavaScript variable and sent on the HTTPS request, not stored in localStorage. Do not use personal data in a public hackathon demo.
-2. **Server configured:** Set `NVIDIA_API_KEY` as an encrypted Vercel environment variable. Then judges can invoke Muse Glimmer without entering a key. **Warning:** publicly accessible server keys should have provider limits/restricted use to avoid misuse or charges. Prefer time-limited demo access.
+- The saved workspace is local to each browser; no cloud synchronization or accounts.
+- Quotation substring matching is a baseline guardrail, **not** legal verification or contextual truth validation.
+- Impact categories are deterministic prompts for review, not AI predictions or priced estimates.
+- PDF/audio ingestion, collaboration, authentication, durable audit storage, live model validation, privacy controls and production-grade rate limiting remain future work.
+- Public demo data is synthetic. **Do not enter sensitive client communications.**
 
-The API is `/api/analyze` with `POST {text,sourceTitle}`. It rejects large text, demands JSON output, verifies that every returned quote exists in the submitted original, and returns verified candidates. An absent key returns 428 and a clear UI notice, not a fake success.
+## Project materials
 
-**No API key is included in source code.** This repository alone does not prove any live inference has run. For hackathon eligibility, configure the key, run a real call, and demonstrate it in the three-minute video.
+- [Demo walkthrough](DEMO_VIDEO_SCRIPT.md)
+- [Quick start](QUICK_START.md)
+- [Submission information](SUBMISSION.md)
+- [API connection guide](API_SETUP.md)
+- [Source of the inference endpoint](api/analyze.js)
+- [Tests](tests/endpoint.test.js)
 
-## Data and limitations
+Built by **Oluwaseun Oyediran** for the Meta Global AI Developer Hackathon.
 
-- **Storage is browser-local**, not a multi-user durable backend. Export the JSON to preserve your work. Reset is destructive by design. No login/access controls.
-- Proof-of-concept quote validation is a strict substring check; it does not prove the quote's context or that an agreement is legally binding.
-- Dependency impact alerts are an explicit, deterministic checklist, not computed cost projections.
-- The sample includes only synthetic records. Do not upload confidential client data.
-- File parsing supports TXT/Markdown; PDF, images, audio, OCR, real-time collaboration and reviewer authentication are not yet implemented.
-- No generated demo video is included; record browser use live and verify links are public.
-
-## Structure
-
-- `index.html`, `styles.css`, `app.js`: static client-side demo.
-- `api/analyze.js`: NVIDIA Muse Glimmer serverless inference integration.
-- `api/health.js`: deployment readiness (reports whether env key is present, not whether a call succeeded).
-- `tests/`: dependency-free smoke/domain tests.
-- `SUBMISSION.md`: submission copy and video walkthrough.
-
-## Why it fits
-
-Problem statement: **Build for Your World.** Freelancers and small teams often lose track of what changed during scattered email/WhatsApp conversations. Accord makes every agreement inspectable by linking each decision to its source, keeping an explicit human approval gate, and surfacing change ripple effects before commitments are overwritten.
-
-## Tests
-
-```bash
-npm test
-```
-
-## License
-
-MIT. Model weights are not bundled. Muse Glimmer model attribution: Meta; review its model license before production use.
-
-
-## 2026 judge-focused presentation
-
-The interface now begins with a cinematic but accessible editorial intro, a high-contrast agreement overview, and a six-scene guided demo tour. Select **Explore the live workspace**, or use **Take the 6-scene tour**. In the app, select **↶ Intro** to replay or **✦ Demo tour** for scene notes. The in-product story and client names are synthetic. See `DEMO_VIDEO_SCRIPT.md` for the original narrated 3-minute storyboard.
-
-
-## Cinematic V3 experience (November 4, 2026)
-
-The entry now includes a skippable 5-second case-file cold open, three-stage suspense reveal, responsive editorial landing page, three interactive source-inspection cards, optional original Web Audio sound, replay controls, and a six-scene guided tour. Sound is user-initiated and motion can be reduced through OS preferences. These are real in-product elements and require no external image or sound assets.
-
-### Video assets and disclosure
-
-`accord-full-demo-preview.mp4` is a **177-second captioned pre-submission product film**, composed from real UI screenshots and the recorded cinematic opening. It is a rehearsal/presentation cut, **not evidence of a working Meta-model call**, a full live click-through, or a final submission recording. The Muse Glimmer section explicitly says live inference needs a key. Record and insert verified model call footage before submitting a judging demonstration. `accord-film-captions.srt` contains editable narration captions.
-
-### Getting an API key without Meta hackathon credits
-
-The app calls `meta/muse-glimmer-30b` via NVIDIA's documented free prototyping endpoint `https://integrate.api.nvidia.com/v1/chat/completions`. Open https://build.nvidia.com/meta/muse-glimmer-30b and use **Generate API Key** while logged into an eligible NVIDIA account. Copy the key into the masked, session-only field in Accord's Meta AI Lab on a deployed site; **do not commit or share it**. A site owner can instead configure `NVIDIA_API_KEY` in Vercel environment variables. No $150 hackathon credit claim is required for the NVIDIA route. Provider free quotas are subject to change. Verify an actual successful Meta response before calling the AI feature operational.
-
-
-## November 5 mobile and demo release
-
-- Browser-verified layout widths: **320, 390, 768, 1024, 1366 CSS pixels**. Navigation scrolls horizontally where appropriate; primary document has no horizontal overflow at tested widths. Main toolbar wraps, KPI grid shifts to two columns, and landing cards use available width.
-- **Preview intended AI workflow** is an intentionally simulated, clearly labeled, non-inference interaction on Meta AI Lab. It uses fictional source E103 and shows the likely review flow. No generated model output is asserted and the preview does not update any records.
-- The video `accord-final-narrated-demo.mp4` is a **177-second narrated demonstration film**, with spoken commentary and subtle ambient audio. Its 56–78-second illustrative segment is explicitly labelled **SIMULATED AI PREVIEW — NO MODEL CALL**. The provider has returned NVIDIA 403 in previous live attempts; the demo must not be described as successful Meta AI inference.
-- The browser app and the narrated video contain no NVIDIA/API credentials. Portfolio access is open, but workspace data is still local to the viewer's browser and the demo sample is synthetic.
+**Stop losing the agreement behind the conversation.**
