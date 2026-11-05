@@ -13,3 +13,7 @@
 - The browser-local audit events are inspectable but not tamper-resistant production-grade storage.
 - Dependency impact lists are deterministic prompts for human review, not model-based forecasts.
 - The supplied film is captioned rehearsal footage and not a narrated human click-through or proof of live model use.
+
+
+### Demo + mobile update
+Use **Meta AI Lab → Preview intended AI workflow** to demonstrate the potential interface while provider access is blocked. It is prominently labeled SIMULATED and does not call or simulate a successful API response. Verify the site at 320px, 390px, 768px, and desktop widths. The narrated demo file is an illustrative walkthrough, not a live inference demonstration.

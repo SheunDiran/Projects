@@ -84,3 +84,11 @@ The entry now includes a skippable 5-second case-file cold open, three-stage sus
 ### Getting an API key without Meta hackathon credits
 
 The app calls `meta/muse-glimmer-30b` via NVIDIA's documented free prototyping endpoint `https://integrate.api.nvidia.com/v1/chat/completions`. Open https://build.nvidia.com/meta/muse-glimmer-30b and use **Generate API Key** while logged into an eligible NVIDIA account. Copy the key into the masked, session-only field in Accord's Meta AI Lab on a deployed site; **do not commit or share it**. A site owner can instead configure `NVIDIA_API_KEY` in Vercel environment variables. No $150 hackathon credit claim is required for the NVIDIA route. Provider free quotas are subject to change. Verify an actual successful Meta response before calling the AI feature operational.
+
+
+## November 5 mobile and demo release
+
+- Browser-verified layout widths: **320, 390, 768, 1024, 1366 CSS pixels**. Navigation scrolls horizontally where appropriate; primary document has no horizontal overflow at tested widths. Main toolbar wraps, KPI grid shifts to two columns, and landing cards use available width.
+- **Preview intended AI workflow** is an intentionally simulated, clearly labeled, non-inference interaction on Meta AI Lab. It uses fictional source E103 and shows the likely review flow. No generated model output is asserted and the preview does not update any records.
+- The video `accord-final-narrated-demo.mp4` is a **177-second narrated demonstration film**, with spoken commentary and subtle ambient audio. Its 56–78-second illustrative segment is explicitly labelled **SIMULATED AI PREVIEW — NO MODEL CALL**. The provider has returned NVIDIA 403 in previous live attempts; the demo must not be described as successful Meta AI inference.
+- The browser app and the narrated video contain no NVIDIA/API credentials. Portfolio access is open, but workspace data is still local to the viewer's browser and the demo sample is synthetic.

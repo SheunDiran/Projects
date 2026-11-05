@@ -65,3 +65,8 @@ You can use this tour to rehearse, then dismiss the overlay for a clean screen c
 **00:19–02:57** – Follow the prepared case chronology in the supplied `accord-full-demo-preview.mp4`, using the matching `accord-film-captions.srt` as the narration/closed-caption reference. Each scene is labeled, including a model-status disclosure.
 
 **BEFORE FINAL SUBMISSION:** Replace the model-lab preview portion with footage of a real Muse Glimmer response after a key has been configured; show the quote source matches; add actual clicks for decision confirmation; render a new <=3:00 recorded demo. Do not represent the supplied captioned showcase reel as proof of working AI integration.
+
+
+## Narrated demo cut, Nov 5
+The new 177-second voiceover version uses all 27 timed narrative beats, spoken aloud over restrained ambient audio. Between 00:56 and 01:18, it displays a **clearly labelled simulated** Meta inference preview with source E103 and a proposed November 11 delivery change. No model response is claimed. The real change simulator and evidence-linked decision ledger continue afterward.
+Do not call this a verified AI-powered demo until a live Muse Glimmer request succeeds. The narrator voice is synthetic and may be re-recorded with a human voice before publication if desired.
