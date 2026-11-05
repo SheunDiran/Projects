@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+*.token
+results/curatorkit/
+results/*predictions*.jsonl
+results/tiny_aya_*.jsonl
+results/*metrics.json
+.cache/
+.ipynb_checkpoints/

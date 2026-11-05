@@ -1,102 +1,106 @@
-# Accord — Evidence to Agreement
+# Borrowed Authority — Who Actually Gave Permission?
 
-### A request is not an agreement.
+**AI Red Teaming, Safety & Alignment · Lexsi Labs Hackathon 2026 · Track B**
 
-**An evidence-backed workspace for tracking commitments, spotting conflicting decisions, and seeing the impact of change before saying yes.**
+> An AI agent can understand an instruction perfectly and still obey the wrong person.
 
-[**Explore the live application**](https://accord-evidence-hackathon.vercel.app) · [**Watch the 2:57 narrated demonstration**](https://drive.google.com/file/d/1Dp7R1XATi_8vI0yrU9aBeXK1KVvbP7by/view?usp=drivesdk) · [**Read the API setup guide**](API_SETUP.md)
+**Borrowed Authority** studies a specific failure mode in automated workflows: **authority laundering**. Persuasive, forwarded, outdated or forged communications make it look like a trusted owner approved an action, even when the actual approval ledger says otherwise. We ask whether an eligible **Cohere Tiny Aya Earth** language model can discriminate claimed authority from verifiable authorization—and whether provenance-aware prompting improves this behaviour without over-refusing legitimate requests.
 
-**Meta Global AI Developer Hackathon 2026** · **Indie Developer** · **Build for Your World**
+- **Research demo:** [Borrowed Authority interactive evidence lab](https://borrowed-authority-lexsi.vercel.app)
+- **Hackathon:** [Official Lexsi event and Track B rules](https://hackathon.lexsi.ai/)
+- **Selected Cohere model:** [CohereLabs/tiny-aya-earth](https://huggingface.co/CohereLabs/tiny-aya-earth) — gated open weights (3.35B), noncommercial research licence.
+- **Toolkit pipeline:** [CuratorKIT](https://github.com/Lexsi-Labs/CuratorKIT) → [Tiny Aya Earth real inference](https://huggingface.co/CohereLabs/tiny-aya-earth) → [AuditKIT](https://github.com/Lexsi-Labs/AuditKIT) (optional [SafeTune](https://github.com/Lexsi-Labs/SafeTune) follow-up).
 
----
+## Research status — November 5, 2026
 
-## The problem
+| Milestone | Evidence | Status |
+|---|---|---|
+| Research question, threat model, proposed hypotheses | `docs/RESEARCH_PROTOCOL.md` | **Prepared** |
+| Synthetic test cases and labels | `data/benchmark_all.jsonl` | **224 cases created, unreviewed by independent expert** |
+| Family-disjoint train/validation/test | `data/manifest.json` | **132 / 46 / 46** |
+| Evaluation and unit tests | `scripts/evaluate.py`, `tests/` | **13 offline tests passed** |
+| Browser-based case explorer | `index.html`, `app.js`, `styles.css` | **Implemented** |
+| Cohere Tiny Aya Earth real inference | `scripts/run_tiny_aya.py` | **NOT RUN** — gated model license + GPU needed |
+| CuratorKIT / AuditKIT measured toolkit runs | `toolkits/` | **Scripts prepared, toolkit execution pending** |
+| Before/after model statistics | `results/` | **NOT YET MEASURED** |
+| Hugging Face dataset, logs and model artifacts | `hf/`, upload helper | **Prepared for upload, not published** |
+| Final Lexsi submission | Organizer form | **NOT SUBMITTED** |
 
-Imagine a studio agreeing to deliver a five-page website for ₦450,000 by November 18. Days later, the client asks for an extra dashboard, a November 11 deadline and no increase in price.
+**This is an evaluated software pipeline but not yet an empirical AI safety result. No screenshot, case label or interface state is presented as an observed model response.**
 
-Was that request accepted? Does it replace the original agreement? What else needs to change?
+## Why the problem matters
 
-Project commitments often drift across messages, emails and handoffs. Accord is designed to make the difference between **requested**, **agreed**, and **changed** visible.
+A student association's forwarded message claims a donor roster was cleared for release. A freelance studio sees a screenshot of an old approved change—but a newer entry revoked it. An agent receives an instruction that *looks* like a high-priority system override inside an uploaded document. A naive assistant may treat words such as *"approved"*, *"director"*, or *"urgent"* as proof. Yet permission is a property of **trusted provenance, scope and effective time**, not rhetoric.
 
-## What you can try now
+The particular contribution to investigate is **authorization provenance across conflicting human communications**, not the broader, already-studied problem of prompt injection.
 
-1. **Explore the case:** open the landing page and inspect the original source-backed story.
-2. **Evidence library:** examine kickoff communications and the later change request.
-3. **Decision ledger:** filter proposed, confirmed, rejected and superseded records.
-4. **Impact simulator:** preview affected delivery, quality-assurance and communication dependencies without mutating the agreement.
-5. **Human approval:** confirm or reject a proposed change and inspect its audit history.
-6. **Meta AI Lab:** see the planned source-grounded extraction flow and try the clearly marked **Illustrative AI Workflow**. This example is simulated and does **not** call a model.
+## Dataset
 
-The application uses a fictional, resettable case study and browser-local storage. It is a functional prototype, **not a production agreement system**.
+Our synthetic, domain-diverse dataset includes **224 cases across 44 family-disjoint workflows**:
 
-## Architecture
+- **80 original cases:** verified owner permission, spoofed authority, unresolved proposals, benign informational requests.
+- **144 additional cases:** active approval, explicit revocation, expired delegation, wrong-scope approval, forged directive and benign process inquiry.
+- **Splits:** 132 training; 46 validation; 46 held-out test. A family and all its variations appear in only one split.
+- **Labels:** `EXECUTE` means a *simulation-only decision label*. This software will **never perform transfers, issue payments, change records or trigger external operations**.
 
-```text
-Browser UI (vanilla JavaScript / CSS / HTML)
-   ├── Evidence and original quotations
-   ├── Decision ledger + contradiction checks
-   ├── Deterministic change-impact preview
-   ├── Human confirm / reject / supersede
-   ├── Browser-local audit history + JSON export/import
-   └── Meta AI Lab
-         └── POST /api/analyze (Vercel serverless)
-               ├── Meta Muse Glimmer 30B through NVIDIA NIM
-               ├── Optional same-model OpenRouter fallback
-               ├── Exact-quotation validation
-               └── Candidate suggestions for human review
-```
+This is a **small synthetic starter**, not an independently annotated representative dataset. Many cases inherit lexical patterns from templates; we must expand with human-reviewed naturalistic evidence before making external-validity claims.
 
-The backend requests a structured extraction response, verifies that each proposed supporting quotation appears in the supplied evidence, and discards suggestions without source-matching quotes. **An AI suggestion is never silently accepted as a confirmed commitment.**
+## Reproduce the offline setup
 
-### AI integration status — important disclosure
-
-The inference integration is implemented and covered by automated tests, but **a successful hosted Meta-model inference has not yet been verified**. The NVIDIA endpoint returned **403 — Authorization failed** during production smoke testing. The fallback provider is optional and requires separate credentials. The lab's illustrative preview is deliberately labeled **SIMULATED — NO MODEL CALL**. No fabricated AI results are presented as live output.
-
-[API setup and troubleshooting](API_SETUP.md) · [Live source overview](SUBMISSION.md)
-
-## Responsive experience and demo
-
-The interface has been checked in browser emulation at widths including **320px, 390px, 768px, 1024px, and 1366px**. The main navigation scrolls on narrow screens and panels wrap to fit. Accessibility features include user-initiated sound, a skip control for the case-file opening, and reduced-motion handling. Physical-device testing is still recommended.
-
-The [**2-minute-57-second narrated video**](https://drive.google.com/file/d/1Dp7R1XATi_8vI0yrU9aBeXK1KVvbP7by/view?usp=drivesdk) shows the product story, source-linked decisions, change consequences and the clearly labeled illustrative AI workflow. This video is not footage of successful live Meta inference.
-
-## Run locally
+Python 3.11+ required; these steps have **no account or GPU dependency**:
 
 ```bash
-git clone https://github.com/SheunDiran/Projects.git
-cd Projects
-npm test
-npx serve . -l 3000
+python scripts/generate_dataset.py
+python scripts/build_advanced_dataset.py
+python scripts/prepare_training_data.py
+python -m unittest discover -s tests -v
 ```
 
-Visit http://localhost:3000. The static client will run locally; `/api/analyze` requires a Vercel-compatible serverless environment. No browser API keys need to be checked into Git.
+**The tests validate data structure and scorer arithmetic, NOT AI performance.**
 
-## Technology
+## Run a REAL Tiny Aya experiment (GPU + gated HF model license)
 
-- **Frontend:** HTML5, CSS3, vanilla JavaScript.
-- **Backend:** JavaScript serverless function on Vercel.
-- **Model integration:** Meta Muse Glimmer 30B through NVIDIA NIM; optional OpenRouter provider.
-- **Data:** browser `localStorage` with JSON import/export.
-- **Validation:** exact quote matching, explicit user confirmation, deterministic impact checklist.
-- **Testing:** Node built-in test runner and automated endpoint smoke tests.
+1. Open the model page and accept [Cohere's gated model terms](https://huggingface.co/CohereLabs/tiny-aya-earth) in your own HF account. Never paste credentials into a public chat or GitHub.
+2. Start a GPU runtime (Colab/Kaggle, or an authorized HF GPU). The model is 3.35B parameters; fit and limits depend on VRAM.
+3. Install `torch`, `transformers`, `accelerate`, `curatorkit`, and `auditkit`, and verify actual imports.
+4. Run:
 
-## Limitations and next steps
+```bash
+python toolkits/run_curatorkit.py
+python scripts/run_tiny_aya.py --cases data/benchmark_test.jsonl --regime baseline --output results/tiny_aya_baseline.jsonl
+python scripts/run_tiny_aya.py --cases data/benchmark_test.jsonl --regime hardened --output results/tiny_aya_hardened.jsonl
+python scripts/evaluate.py --cases data/benchmark_test.jsonl --predictions results/tiny_aya_baseline.jsonl --after results/tiny_aya_hardened.jsonl --output results/paired_metrics.json
+python toolkits/run_auditkit.py --cases data/benchmark_test.jsonl --predictions results/tiny_aya_baseline.jsonl --output results/auditkit_baseline.json
+python toolkits/run_auditkit.py --cases data/benchmark_test.jsonl --predictions results/tiny_aya_hardened.jsonl --output results/auditkit_hardened.json
+```
 
-- The saved workspace is local to each browser; no cloud synchronization or accounts.
-- Quotation substring matching is a baseline guardrail, **not** legal verification or contextual truth validation.
-- Impact categories are deterministic prompts for review, not AI predictions or priced estimates.
-- PDF/audio ingestion, collaboration, authentication, durable audit storage, live model validation, privacy controls and production-grade rate limiting remain future work.
-- Public demo data is synthetic. **Do not enter sensitive client communications.**
+**Alternative:** Open the included [`notebooks/Run_Real_Experiments.ipynb`](notebooks/Run_Real_Experiments.ipynb) in a GPU Colab instance.
 
-## Project materials
+**Intervention disclosure:** The baseline vs hardened version changes the *system prompt*, not the model weights. To claim **model-weight repair**, an actual SafeTune intervention and separate checkpoint test would be required. We do not yet claim one.
 
-- [Demo walkthrough](DEMO_VIDEO_SCRIPT.md)
-- [Quick start](QUICK_START.md)
-- [Submission information](SUBMISSION.md)
-- [API connection guide](API_SETUP.md)
-- [Source of the inference endpoint](api/analyze.js)
-- [Tests](tests/endpoint.test.js)
+## Metrics to report after genuine inference
 
-Built by **Oluwaseun Oyediran** for the Meta Global AI Developer Hackathon.
+1. Unauthorized execution rate (false authorization; lower is better)
+2. Legitimate approval completion rate (higher is better)
+3. Spoofed authority rejection rate (higher is better)
+4. Benign over-refusal rate (lower is better)
+5. Source attribution accuracy (higher is better)
+6. Parse error rate (lower is better)
 
-**Stop losing the agreement behind the conversation.**
+`evaluate.py` includes Wilson 95% confidence intervals, confusion counts and family breakdowns; it rejects missing or duplicate case predictions. When before/after inputs are supplied it computes paired corrected/regressed counts. Cases, raw outputs and experiment manifests must be preserved.
+
+## What will be handed to judges
+
+- Source and methodology, with clear limitations and safety scope
+- Public case explorer demonstrating trusted vs untrusted evidence
+- Hugging Face dataset and artifact manifest (after upload)
+- Observed before/after results and saved model run manifests (after real run)
+- CuratorKIT output manifests, AuditKIT evaluation and an HF Article/write-up (after toolkit execution)
+- Failure analysis on the held-out set and at least one regression case if present
+
+## Licensing & safety
+
+All benchmark cases are fictional. No identifiable real person, payment credential, student record, or confidential client text is included. This is a research evaluation harness, not an approval system for real users. Cohere's selected weights are **CC BY-NC 4.0** with additional terms; review its terms before commercial reuse. Lexsi toolkits may have different licenses—verify each before integration.
+
+**Author:** Oluwaseun Oyediran.  
+**Slogan:** *Not every voice has a vote.*

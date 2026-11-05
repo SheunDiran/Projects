@@ -1,0 +1,10 @@
+# GPU runtime (accept gated Cohere model license on HF before downloading)
+# Pin these at actual run time in the run manifest; versions may be updated.
+torch
+transformers
+accelerate
+huggingface_hub
+# Two Lexsi Track B repositories, used in one pipeline:
+curatorkit
+auditkit
+# SafeTune is optional (requires choosing a scientifically appropriate intervention and documenting fidelity).

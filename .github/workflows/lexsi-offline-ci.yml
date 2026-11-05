@@ -1,0 +1,39 @@
+name: Borrowed Authority offline tests and toolkit smoke
+on:
+  push:
+    branches:
+      - lexsi-borrowed-authority
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate dataset and benchmark scorer
+        run: |
+          python scripts/generate_dataset.py
+          python scripts/build_advanced_dataset.py
+          python scripts/prepare_training_data.py
+          python -m unittest discover -s tests -v
+          python scripts/prepare_hf_artifacts.py
+      - name: Install real Lexsi toolkits
+        run: python -m pip install curatorkit auditkit
+      - name: Run real CuratorKIT CPU data cleaning
+        run: python toolkits/run_curatorkit.py
+      - name: Run real AuditKIT API integration smoke
+        run: python toolkits/smoke_auditkit.py
+      - name: Upload audit trail (not model results)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: borrowed-authority-curation-and-scorer-smoke
+          path: |
+            results/curatorkit/
+            data/manifest.json
+          if-no-files-found: ignore
