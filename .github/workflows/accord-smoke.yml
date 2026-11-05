@@ -25,7 +25,7 @@ jobs:
               signal: AbortSignal.timeout(55000)
             });
             const result = await response.json().catch(()=>({error:'Invalid JSON response'}));
-            console.log(JSON.stringify({status:response.status,provider:result.provider||null,model:result.model||null,candidates:Array.isArray(result.candidates)?result.candidates.length:null,error:result.error||null,detail:result.detail||null,discarded:result.discarded||null}));
+            console.log(JSON.stringify({status:response.status,provider:result.provider||null,model:result.model||null,candidates:Array.isArray(result.candidates)?result.candidates.length:null,error:result.error||null,code:result.code||null,providerStatus:result.upstreamStatus||null,discarded:result.discarded||null}));
             if (!response.ok) process.exitCode=1;
           }
           main().catch(e=>{console.error('Request failed:',e.message);process.exitCode=1});
