@@ -26,7 +26,7 @@ jobs:
         run: python -m pip install curatorkit auditkit
       - name: Run real CuratorKIT CPU data cleaning
         run: python toolkits/run_curatorkit.py
-      - name: Run real AuditKIT API integration smoke
+      - name: Verify CuratorKIT to AuditKIT chained pipeline
         run: python toolkits/smoke_auditkit.py
       - name: Upload audit trail (not model results)
         if: always()
@@ -35,5 +35,6 @@ jobs:
           name: borrowed-authority-curation-and-scorer-smoke
           path: |
             results/curatorkit/
+            results/auditkit/
             data/manifest.json
           if-no-files-found: ignore
