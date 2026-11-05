@@ -92,6 +92,7 @@ def main():
     kinds=['verified','spoof','uncertain','benign']
     records=[dict(make_case(i,d,a,k,rng),split=split_map[i]) for i,(d,a) in enumerate(DOMAINS,start=1) for k in kinds]
     root=ROOT/'data'
+    root.mkdir(parents=True,exist_ok=True)
     for split in ['train','validation','test']:
         selected=[r for r in records if r['split']==split]
         with (root/f'{split}.jsonl').open('w',encoding='utf-8') as f:
