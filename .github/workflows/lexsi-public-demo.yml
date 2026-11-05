@@ -1,0 +1,38 @@
+name: Borrowed Authority public-site access check
+on:
+  push:
+    branches: [lexsi-borrowed-authority]
+    paths:
+      - '.github/workflows/lexsi-public-demo.yml'
+      - 'index.html'
+      - 'app.js'
+      - 'styles.css'
+      - 'cases.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  guest-access:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verify all public app assets without Vercel authentication
+        env:
+          ORIGIN: https://borrowed-authority-lexsi.vercel.app
+        run: |
+          python - <<'PY'
+          import os, urllib.request, json
+          origin=os.environ['ORIGIN']
+          for path in ['/', '/styles.css', '/app.js', '/cases.json']:
+              request=urllib.request.Request(origin+path,headers={'User-Agent':'Borrowed-Authority-Guest-Access-Test/1.0'})
+              with urllib.request.urlopen(request,timeout=20) as response:
+                  data=response.read()
+                  code=response.status
+                  typ=response.headers.get('content-type')
+              assert code==200 and len(data)>200,(path,code,len(data))
+              if path=='/':assert b'Borrowed Authority' in data
+              if path=='/cases.json':
+                  items=json.loads(data)
+                  print('Cases payload type:',type(items).__name__)
+              print(f'PASS {path}: {code}, {len(data)} bytes, {typ}')
+          PY
