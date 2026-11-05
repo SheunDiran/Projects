@@ -21,12 +21,12 @@
 | Evaluation and unit tests | `scripts/evaluate.py`, `tests/` | **13 offline tests passed** |
 | Browser-based case explorer | `index.html`, `app.js`, `styles.css` | **Implemented** |
 | Cohere Tiny Aya Earth real inference | `scripts/run_tiny_aya.py` | **NOT RUN** — gated model license + GPU needed |
-| CuratorKIT / AuditKIT measured toolkit runs | `toolkits/` | **Scripts prepared, toolkit execution pending** |
+| CuratorKIT → AuditKIT chain (train only) | [GitHub Actions run](https://github.com/SheunDiran/Projects/actions/runs/41987398951) | **SUCCESS: CuratorKIT accepted 132/132; AuditKIT ran a 12-row reference-replay smoke. Not model accuracy.** |
 | Before/after model statistics | `results/` | **NOT YET MEASURED** |
 | Hugging Face dataset, logs and model artifacts | `hf/`, upload helper | **Prepared for upload, not published** |
 | Final Lexsi submission | Organizer form | **NOT SUBMITTED** |
 
-**This is an evaluated software pipeline but not yet an empirical AI safety result. No screenshot, case label or interface state is presented as an observed model response.**
+**This is a tested data-curation and evaluation-toolkit pipeline, but not yet an empirical AI safety result. No screenshot, case label or interface state is presented as an observed model response.**
 
 ## Why the problem matters
 
@@ -56,7 +56,7 @@ python scripts/prepare_training_data.py
 python -m unittest discover -s tests -v
 ```
 
-**The tests validate data structure and scorer arithmetic, NOT AI performance.**
+**The tests validate data structure and scorer arithmetic, NOT AI performance.** The real CuratorKIT to AuditKIT integration also passes in [GitHub Actions](https://github.com/SheunDiran/Projects/actions/runs/41987398951): 132/132 curated examples, 12 reference-label replay checks; no Cohere inference has yet occurred.
 
 ## Run a REAL Tiny Aya experiment (GPU + gated HF model license)
 
@@ -95,7 +95,7 @@ python toolkits/run_auditkit.py --cases data/benchmark_test.jsonl --predictions 
 - Public case explorer demonstrating trusted vs untrusted evidence
 - Hugging Face dataset and artifact manifest (after upload)
 - Observed before/after results and saved model run manifests (after real run)
-- CuratorKIT output manifests, AuditKIT evaluation and an HF Article/write-up (after toolkit execution)
+- CuratorKIT cleaning manifest and AuditKIT training-data handoff smoke (completed in CI), plus real model evaluation and HF Article/write-up (pending)
 - Failure analysis on the held-out set and at least one regression case if present
 
 ## Licensing & safety
