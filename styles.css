@@ -122,3 +122,5 @@ button,a,input,select,textarea{max-width:100%}
  .cold-head>span:nth-child(2){display:none}
 }
 @media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}}
+
+@media(max-width:700px){.sidebar::after{content:'SWIPE TABS TO EXPLORE  ↔';font:700 9px/1.5 Arial,sans-serif;letter-spacing:.13em;color:#91bda0;display:block;text-align:right;padding:2px 3px 0}.sidebar nav{scroll-snap-type:x proximity}.sidebar nav button{scroll-snap-align:start}}
